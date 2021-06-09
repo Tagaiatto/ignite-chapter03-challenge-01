@@ -1,1 +1,27 @@
-// TODO
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  background: black;
+  display: flex;
+  flex-flow: column wrap;
+}
+.logo {
+  margin-top: 5rem;
+  object-fit: none;
+}
+
+.posts {
+  margin: 5rem 0;
+  align-self: flex-start;
+  a {
+    padding: 2rem;
+    display: block;
+    strong {
+      font-size: 2rem;
+    }
+    p {
+      padding-bottom: 1rem;
+    }
+  }
+}
