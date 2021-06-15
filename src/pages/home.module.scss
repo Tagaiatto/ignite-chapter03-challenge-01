@@ -4,7 +4,18 @@
   padding: 0 2rem;
   background: black;
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: row wrap;
+  
+
+  button {
+    border: none;
+    display: block;
+    margin-top: 2.5rem;
+    background: transparent;
+    font-size: 1.25rem;
+    font-weight:bold;
+    color: #FF57B2;
+  }
 }
 .logo {
   margin-top: 5rem;
@@ -12,16 +23,18 @@
 }
 
 .posts {
-  margin: 5rem 0;
-  align-self: flex-start;
+  margin: 3rem 0;
   a {
-    padding: 2rem;
+    padding: 2rem 0;
     display: block;
     strong {
-      font-size: 2rem;
+      font-size: 2rem; 
     }
     p {
-      padding-bottom: 1rem;
+      padding: 1rem 0;
+    }
+    time {
+      padding-right: 1rem;
     }
   }
 }

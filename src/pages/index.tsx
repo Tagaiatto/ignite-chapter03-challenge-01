@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next';
+import Link from 'next/link';
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-dom';
 import { format } from 'date-fns';
@@ -37,12 +38,19 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
         <img src="/images/logo.png" alt="logo" className={styles.logo} />
         <div className={styles.posts}>
           {results.map(post => (
-            <a href="/" key={post.uid}>
-              <strong>{post.data.title}</strong>
-              <p>{post.data.subtitle}</p>
-              <time>{post.first_publication_date}</time>
-            </a>
+            <Link href={`/post/${post.uid}`}>
+              <a key={post.uid}>
+                <strong>{post.data.title}</strong>
+                <p>{post.data.subtitle}</p>
+                <div>
+                  <time>{post.first_publication_date}</time>
+                  {post.data.author}
+                </div>
+              </a>
+            </Link>
           ))}
+          {next_page ? <button type="button">Carregar mais posts</button> : ''}
+          <button type="button">Carregar mais posts</button>
         </div>
       </div>
     </>
