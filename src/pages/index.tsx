@@ -4,6 +4,8 @@ import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-dom';
 import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+import { FiCalendar, FiUser } from 'react-icons/fi';
+import { useState } from 'react';
 import Header from '../components/Header';
 
 import { getPrismicClient } from '../services/prismic';
@@ -32,25 +34,64 @@ interface HomeProps {
 
 export default function Home({ postsPagination }: HomeProps): JSX.Element {
   const { next_page, results } = postsPagination;
+
+  const [posts, setPosts] = useState<Post[]>(results);
+  const [nextPage, setNextPage] = useState(next_page);
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  async function handleLoadPosts() {
+    const postResults = await fetch(`${nextPage}`).then(res => res.json());
+
+    setNextPage(postResults.next_page);
+
+    const newPosts = postResults.results.map(post => ({
+      uid: post.uid,
+      first_publication_date: format(
+        new Date(post.first_publication_date),
+        'dd MMM YYY',
+        {
+          locale: ptBR,
+        }
+      ),
+      data: {
+        title: post.data.title,
+        subtitle: post.data.subtitle,
+        author: post.data.author,
+      },
+    }));
+
+    setPosts([...posts, ...newPosts]);
+  }
+
   return (
     <>
-      <div className={styles.container}>
+      <div className={`${styles.container} ${commonStyles.container}`}>
         <img src="/images/logo.png" alt="logo" className={styles.logo} />
-        <div className={styles.posts}>
-          {results.map(post => (
-            <Link href={`/post/${post.uid}`}>
-              <a key={post.uid}>
-                <strong>{post.data.title}</strong>
+        <div className={`${styles.posts} ${commonStyles.postContainer}`}>
+          {posts.map(post => (
+            <Link href={`/post/${post.uid}`} key={post.uid}>
+              <a>
+                <h1>{post.data.title}</h1>
                 <p>{post.data.subtitle}</p>
-                <div>
-                  <time>{post.first_publication_date}</time>
-                  {post.data.author}
+                <div className={commonStyles.icons}>
+                  <p>
+                    <FiCalendar />
+                    {post.first_publication_date}
+                  </p>
+                  <p>
+                    <FiUser />
+                    {post.data.author}
+                  </p>
                 </div>
               </a>
             </Link>
           ))}
-          {next_page ? <button type="button">Carregar mais posts</button> : ''}
-          <button type="button">Carregar mais posts</button>
+          {next_page ? (
+            <button type="button" onClick={handleLoadPosts}>
+              Carregar mais posts
+            </button>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     </>

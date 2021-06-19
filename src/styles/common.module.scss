@@ -1,1 +1,35 @@
-// TODO
+.container {
+  max-width: 1440px;
+  width: 100%;
+  background-color: inherit;
+  margin: 0rem 25rem;
+}
+
+.postContainer {
+  
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .title {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .icons {
+    display: flex;
+    margin-bottom: 1rem;
+    p {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+    p > * {
+      margin-right: 10px;
+    }
+    p + p {
+      margin-left: 1.5rem;
+    }
+  }
+  
+}

@@ -1,11 +1,14 @@
 .container {
   max-width: 1120px;
+  min-height: 1080px;
   margin: 0 auto;
-  padding: 0 2rem;
-  background: black;
   display: flex;
   flex-flow: row wrap;
   
+  .logo {
+    margin-top: 5rem;
+    height: 1.5rem;
+  }
 
   button {
     border: none;
@@ -17,24 +20,16 @@
     color: #FF57B2;
   }
 }
-.logo {
-  margin-top: 5rem;
-  object-fit: none;
-}
 
 .posts {
-  margin: 3rem 0;
+  margin: 2rem 0;
   a {
-    padding: 2rem 0;
     display: block;
     strong {
       font-size: 2rem; 
     }
     p {
       padding: 1rem 0;
-    }
-    time {
-      padding-right: 1rem;
     }
   }
 }

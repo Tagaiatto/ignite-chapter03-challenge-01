@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
+import { FiCalendar, FiUser, FiClock } from 'react-icons/fi';
 
 import { RichText } from 'prismic-dom';
 import { format } from 'date-fns';
@@ -55,18 +56,31 @@ export default function Post({ post }: PostProps): JSX.Element {
       ) : (
         <>
           <figure>
-            <img src={post.data.banner.url} alt="banner" />
+            <img
+              src={post.data.banner.url}
+              alt="banner"
+              className={styles.banner}
+            />
           </figure>
-          <main>
-            <title>{post.data.title}</title>
-            <div>
-              {post.first_publication_date}
-              {post.data.author}
-              {readingTime}
+          <main className={commonStyles.postContainer}>
+            <h1 className={commonStyles.title}>{post.data.title}</h1>
+            <div className={commonStyles.icons}>
+              <p>
+                <FiCalendar />
+                {post.first_publication_date}
+              </p>
+              <p>
+                <FiUser />
+                {post.data.author}
+              </p>
+              <p>
+                <FiClock />
+                {readingTime} min
+              </p>
             </div>
 
             {post.data.content.map(content => (
-              <article key={content.heading}>
+              <article key={content.heading} className={styles.postContent}>
                 <h2>{content.heading}</h2>
                 <div
                   // eslint-disable-next-line react/no-danger
