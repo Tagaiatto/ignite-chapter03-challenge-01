@@ -35,7 +35,17 @@ interface HomeProps {
 export default function Home({ postsPagination }: HomeProps): JSX.Element {
   const { next_page, results } = postsPagination;
 
-  const [posts, setPosts] = useState<Post[]>(results);
+  const formattedResults = results.map(post => ({
+    first_publication_date: format(
+      new Date(post.first_publication_date),
+      'd MMM y',
+      {
+        locale: ptBR,
+      }
+    ),
+    ...post,
+  }));
+  const [posts, setPosts] = useState<Post[]>(formattedResults);
   const [nextPage, setNextPage] = useState(next_page);
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   async function handleLoadPosts() {
@@ -65,7 +75,9 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
   return (
     <>
       <div className={`${styles.container} ${commonStyles.container}`}>
-        <img src="/images/logo.png" alt="logo" className={styles.logo} />
+        <div className={styles.logo}>
+          <img src="/images/logo.png" alt="logo" />
+        </div>
         <div className={`${styles.posts} ${commonStyles.postContainer}`}>
           {posts.map(post => (
             <Link href={`/post/${post.uid}`} key={post.uid}>
@@ -75,7 +87,9 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
                 <div className={commonStyles.icons}>
                   <p>
                     <FiCalendar />
-                    {post.first_publication_date}
+                    {format(new Date(post.first_publication_date), 'd MMM y', {
+                      locale: ptBR,
+                    })}
                   </p>
                   <p>
                     <FiUser />
@@ -112,13 +126,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const results: Post[] = postsResponse.results.map(post => {
     return {
       uid: post.uid,
-      first_publication_date: format(
-        new Date(post.first_publication_date),
-        'd MMM y',
-        {
-          locale: ptBR,
-        }
-      ),
+      first_publication_date: post.first_publication_date,
       data: {
         title: String(post.data.title),
         subtitle: String(post.data.subtitle),

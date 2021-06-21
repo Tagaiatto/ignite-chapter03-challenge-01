@@ -62,12 +62,16 @@ export default function Post({ post }: PostProps): JSX.Element {
               className={styles.banner}
             />
           </figure>
-          <main className={commonStyles.postContainer}>
+          <main
+            className={`${commonStyles.postContainer} ${styles.postContainer}`}
+          >
             <h1 className={commonStyles.title}>{post.data.title}</h1>
             <div className={commonStyles.icons}>
               <p>
                 <FiCalendar />
-                {post.first_publication_date}
+                {format(new Date(post.first_publication_date), 'd MMM y', {
+                  locale: ptBR,
+                })}
               </p>
               <p>
                 <FiUser />
@@ -117,17 +121,13 @@ export const getStaticProps: GetStaticProps = async context => {
   const response = await prismic.getByUID('posts', String(slug), {});
 
   const post: Post = {
-    first_publication_date: format(
-      new Date(response.first_publication_date),
-      'd MMM y',
-      {
-        locale: ptBR,
-      }
-    ),
+    first_publication_date: response.first_publication_date,
+    uid: response.uid,
     data: {
       title: response.data.title,
+      subtitle: response.data.subtitle,
       banner: {
-        url: response.data.main.url,
+        url: String(response.data.banner.url),
       },
       author: response.data.author,
       content: response.data.content.map(content => {

@@ -2,14 +2,9 @@
   max-width: 1120px;
   min-height: 1080px;
   margin: 0 auto;
-  display: flex;
-  flex-flow: row wrap;
+  display: block;
+  // flex-flow: row wrap;
   
-  .logo {
-    margin-top: 5rem;
-    height: 1.5rem;
-  }
-
   button {
     border: none;
     display: block;
@@ -19,6 +14,11 @@
     font-weight:bold;
     color: #FF57B2;
   }
+}
+
+.logo {
+  margin: 5rem 0;
+  height: 1.5rem;
 }
 
 .posts {
