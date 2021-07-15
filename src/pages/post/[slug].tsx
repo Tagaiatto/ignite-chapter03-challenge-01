@@ -8,6 +8,7 @@ import ptBR from 'date-fns/locale/pt-BR';
 import Prismic from '@prismicio/client';
 import { getPrismicClient } from '../../services/prismic';
 import Header from '../../components/Header';
+import { Comments } from '../../components/Comments';
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
 
@@ -94,6 +95,8 @@ export default function Post({ post }: PostProps): JSX.Element {
                 />
               </article>
             ))}
+
+            <Comments />
           </main>
         </>
       )}
