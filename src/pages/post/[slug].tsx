@@ -96,6 +96,7 @@ export default function Post({ post }: PostProps): JSX.Element {
               </article>
             ))}
 
+            <hr />
             <Comments />
           </main>
         </>
@@ -123,6 +124,8 @@ export const getStaticProps: GetStaticProps = async context => {
   const prismic = getPrismicClient();
   const response = await prismic.getByUID('posts', String(slug), {});
 
+  console.log(response.data);
+
   const post: Post = {
     first_publication_date: response.first_publication_date,
     uid: response.uid,
@@ -143,7 +146,7 @@ export const getStaticProps: GetStaticProps = async context => {
   };
 
   // console.log(post);
-  // console.log(post.data.content);
+  // console.log(post.data.banner);
   return {
     props: {
       post,
